@@ -48,13 +48,32 @@ export class TrainingPage implements OnInit {
         this.createWord();
     }
 
+    restartTraining() {
+        this.positive = 0;
+        this.negative = 0;
+        this.h = 0;
+        this.m = 0;
+        this.s = 0;
+        this.createClock();
+        this.createWord();
+    }
+
     async openModal() {
+        const modal = await this.modalCtrl.create({
+            component: ModalPage,
+            componentProps: { 
+                time: document.getElementById("hms").innerHTML,
+                positive: this.positive,
+                negative: this.negative
+            }
+        });
+        await modal.present();
+        modal.onDidDismiss().then(() => {
+            this.restartTraining();
+        })
+    }
 
-        const modal = await this.modalCtrl.create({component: ModalPage});
-        return await modal.present();
-      }
-
-    stopCrono(){
+    stopCrono() {
         clearInterval(this.id);
     }
 
@@ -65,7 +84,7 @@ export class TrainingPage implements OnInit {
     positivePoint() {
         this.positive++;
         this.createWord();
-        if(this.positive === 5){
+        if (this.positive === 5) {
             this.stopCrono();
             this.openModal();
         }
