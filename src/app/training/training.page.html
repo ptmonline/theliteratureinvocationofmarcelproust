@@ -10,10 +10,13 @@
 </ion-header>
 <ion-content>
     <div style="margin: 20px; float: right;">TIME: <span id="hms"></span></div>
-    <div style="display: block;clear: both; margin: 20px auto; font-size: 36px; font-weight: 700; text-align: center">
+    <div
+        style="display: block;clear: both; margin: 140px auto 20px; font-size: 76px; font-weight: 700; text-align: center">
         <p>{{word}}</p>
         <!-- <div id="hms"></div> -->
     </div>
-    <ion-button color="primary" (click)="positivePoint()">{{positive}} Yeah!</ion-button>
-    <ion-button color="secondary" (click)="negativePoint()">{{negative}} Meow!</ion-button>
+    <div style="width: 100%; margin-top: 40px; display: block; text-align: center">
+        <ion-button color="primary" (click)="positivePoint()" size="large">{{positive}} Yeah!</ion-button>
+        <ion-button color="danger" (click)="negativePoint()" size="large">{{negative}} Meow!</ion-button>
+    </div>
 </ion-content>

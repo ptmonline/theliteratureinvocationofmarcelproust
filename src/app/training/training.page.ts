@@ -11,7 +11,7 @@ import { ModalPage } from '../modal/modal.page';
 })
 
 export class TrainingPage implements OnInit {
-    public firstConsonant: Array<string> = ['P', 'T', 'F', 'N', 'L', 'M', 'J'];
+    public firstConsonant: Array<string> = ['P', 'T', 'F', 'N', 'L', 'M', 'J', 'B', 'V'];
     public firstvocal: Array<string> = ['A', 'E', 'I', 'O', 'U'];
     public word: string;
     public positive: number = 0;
@@ -84,7 +84,7 @@ export class TrainingPage implements OnInit {
     positivePoint() {
         this.positive++;
         this.createWord();
-        if (this.positive === 5) {
+        if (this.positive === 10) {
             this.stopCrono();
             this.openModal();
         }
