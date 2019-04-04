@@ -3,6 +3,7 @@ import { Observable, interval } from 'rxjs';
 import { map, share } from 'rxjs/operators';
 import { ModalController } from '@ionic/angular';
 import { ModalPage } from '../modal/modal.page';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'app-training-page',
@@ -20,8 +21,31 @@ export class TrainingPage implements OnInit {
     public m: number = 0;
     public s: number = 0;
     public id: any;
+    public showStartBtn: boolean = true;
+    public consonantArray: Array<string>;
+    public numberOfTries: string;
+    public triesOut: number = 0;
+    public wordNumber: string;
 
-    constructor(public modalCtrl: ModalController) {
+    constructor(public modalCtrl: ModalController, private route: ActivatedRoute) {
+        if (this.route.snapshot.paramMap.get("number")){
+            this.numberOfTries = this.route.snapshot.paramMap.get("number");
+        }else{
+            this.numberOfTries = '10';
+        }
+        if (this.route.snapshot.paramMap.get("consonant")) {
+            const val = this.route.snapshot.paramMap.get('consonant');
+            this.consonantArray = val.toUpperCase().split('');
+            console.log(this.consonantArray);
+        } else{
+            this.consonantArray = this.firstConsonant;
+        }
+        if (this.route.snapshot.paramMap.get("word")) {
+            this.wordNumber = this.route.snapshot.paramMap.get('word');
+            
+        } else{
+            this.wordNumber = '1';
+        }
     }
 
     createClock() {
@@ -44,11 +68,11 @@ export class TrainingPage implements OnInit {
 
 
     ngOnInit() {
-        this.createClock();
-        this.createWord();
+        document.getElementById("hms").innerHTML = "00:00:00";
     }
 
-    restartTraining() {
+    start() {
+        this.showStartBtn = false;
         this.positive = 0;
         this.negative = 0;
         this.h = 0;
@@ -58,10 +82,20 @@ export class TrainingPage implements OnInit {
         this.createWord();
     }
 
+    restartTraining() {
+        document.getElementById("hms").innerHTML = "00:00:00";
+        this.triesOut = 0;
+        this.positive = 0;
+        this.negative = 0;
+        this.h = 0;
+        this.m = 0;
+        this.s = 0;
+    }
+
     async openModal() {
         const modal = await this.modalCtrl.create({
             component: ModalPage,
-            componentProps: { 
+            componentProps: {
                 time: document.getElementById("hms").innerHTML,
                 positive: this.positive,
                 negative: this.negative
@@ -70,6 +104,7 @@ export class TrainingPage implements OnInit {
         await modal.present();
         modal.onDidDismiss().then(() => {
             this.restartTraining();
+            this.showStartBtn = true;
         })
     }
 
@@ -78,20 +113,35 @@ export class TrainingPage implements OnInit {
     }
 
     createWord() {
-        this.word = this.firstConsonant[Math.floor(Math.random() * this.firstConsonant.length)] + this.firstvocal[Math.floor(Math.random() * this.firstvocal.length)];
+        // if (this.consonantArray != null) {
+        //     this.word = this.consonantArray[Math.floor(Math.random() * this.consonantArray.length)] + this.firstvocal[Math.floor(Math.random() * this.firstvocal.length)];
+        // } else {
+        //     this.word = this.firstConsonant[Math.floor(Math.random() * this.firstConsonant.length)] + this.firstvocal[Math.floor(Math.random() * this.firstvocal.length)];
+        // }
+        if(this.wordNumber !== '1'){
+            this.word = this.consonantArray[Math.floor(Math.random() * this.consonantArray.length)] + this.firstvocal[Math.floor(Math.random() * this.firstvocal.length)] + this.firstConsonant[Math.floor(Math.random() * this.firstConsonant.length)];
+        }else{
+            this.word = this.consonantArray[Math.floor(Math.random() * this.consonantArray.length)] + this.firstvocal[Math.floor(Math.random() * this.firstvocal.length)];
+        }
     }
 
     positivePoint() {
         this.positive++;
         this.createWord();
-        if (this.positive === 10) {
-            this.stopCrono();
-            this.openModal();
-        }
+        this.checkTryOuts();
     }
 
     negativePoint() {
         this.negative++;
         this.createWord();
+        this.checkTryOuts();
+    }
+
+    checkTryOuts() {
+        this.triesOut++;
+        if (this.triesOut === parseInt(this.numberOfTries)) {
+            this.stopCrono();
+            this.openModal();
+        }
     }
 }

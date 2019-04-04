@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list',
@@ -7,6 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListPage implements OnInit {
   private selectedItem: any;
+  inputValue: any;
+  consonantValue: any;
+  wordValue: number;
   private icons = [
     'flask',
     'wifi',
@@ -20,7 +24,7 @@ export class ListPage implements OnInit {
     'build'
   ];
   public items: Array<{ title: string; note: string; icon: string }> = [];
-  constructor() {
+  constructor(private router: Router) {
     for (let i = 1; i < 11; i++) {
       this.items.push({
         title: 'Item ' + i,
@@ -36,4 +40,18 @@ export class ListPage implements OnInit {
   // navigate(item) {
   //   this.router.navigate(['/list', JSON.stringify(item)]);
   // }
+
+  // getInputValue(){
+  //   console.log(this.inputValue);
+  // }
+  // getConsonantValue(){
+  //   console.log(this.consonantValue);
+  // }
+
+  submitStuff(){
+    const datavalues: any = <any>{};
+    datavalues.number = this.inputValue;
+    datavalues.consonants = this.consonantValue;
+    this.router.navigate(['/training', {number: this.inputValue, consonant: this.consonantValue, word: this.wordValue}])
+  }
 }

@@ -4,7 +4,8 @@ import { ViewController } from '@ionic/core';
 
 @Component({
     selector: 'app-modal-page',
-    templateUrl: './modal.page.html'
+    templateUrl: './modal.page.html',
+    styleUrls: ['./modal.page.scss']
 })
 
 export class ModalPage {

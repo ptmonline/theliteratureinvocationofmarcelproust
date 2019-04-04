@@ -1,21 +1,21 @@
 <ion-header>
     <ion-toolbar>
-        <ion-title>
-            Results
-        </ion-title>
-        <ion-buttons start>
+        <ion-buttons  slot="start">
             <ion-button (click)="dismiss()">
-                <span ion-text color="primary" showWhen="ios">Cancel</span>
                 <ion-icon name="md-close" showWhen="android, windows"></ion-icon>
             </ion-button>
         </ion-buttons>
+        <ion-title>
+                Results
+            </ion-title>
     </ion-toolbar>
 </ion-header>
 <ion-content>
     <img style="width: 100%" src="./assets/images/gumball{{rnd}}.png" />
-    <div style="font-size: 19px; font-weight: 600; display: block; margin: 20px; text-align: center">
-        <p>Time Record: {{time}}</p>
-        <p>Oh Yeahhh !: {{positivePoints}}</p>
-        <p>Oh Meowww !: {{negativePoints}}</p>
+    <div class="results-text">
+        <p><span>Time Record:</span> {{time}}</p>
+        <p><span> Yeahhh !:</span> {{positivePoints}}</p>
+        <p><span>Oh Meowww !:</span> {{negativePoints}}</p>
+        <ion-button  color="primary" size="large" (click)="dismiss()">AGAIN</ion-button>
     </div>
 </ion-content>

@@ -9,14 +9,15 @@
     </ion-toolbar>
 </ion-header>
 <ion-content>
-    <div style="margin: 20px; float: right;">TIME: <span id="hms"></span></div>
+    <div style="margin: 20px; float: right; background: black; color: white; padding: 10px; font-weight: 600;">TIME: <span id="hms"></span></div>
     <div
         style="display: block;clear: both; margin: 140px auto 20px; font-size: 76px; font-weight: 700; text-align: center">
-        <p>{{word}}</p>
-        <!-- <div id="hms"></div> -->
+        <div class="placeholder-init" *ngIf="showStartBtn"></div>
+        <p *ngIf="!showStartBtn">{{word}}</p>
     </div>
     <div style="width: 100%; margin-top: 40px; display: block; text-align: center">
-        <ion-button color="primary" (click)="positivePoint()" size="large">{{positive}} Yeah!</ion-button>
-        <ion-button color="danger" (click)="negativePoint()" size="large">{{negative}} Meow!</ion-button>
+            <ion-button *ngIf="showStartBtn" color="primary" (click)="start()" size="large">Hey Ho Let's Go</ion-button>
+        <ion-button *ngIf="!showStartBtn" color="primary" (click)="positivePoint()" size="large">{{positive}} Yeah!</ion-button>
+        <ion-button *ngIf="!showStartBtn" color="danger" (click)="negativePoint()" size="large">{{negative}} Meow!</ion-button>
     </div>
 </ion-content>

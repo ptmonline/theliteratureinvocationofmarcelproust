@@ -4,13 +4,25 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>
-      List
+      Settings
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-list>
+  <ion-item>
+    <ion-label position='stacked'>Selecciona quantitat de intents:</ion-label>
+    <ion-input [(ngModel)]="inputValue" placeholder="Quantes intents vols que hagi?"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position='stacked'>Selecciona consonants:</ion-label>
+    <ion-input [(ngModel)]="consonantValue" placeholder="Quines consonants vols practicar?"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position='stacked'>Selecciona quantitat de paraules:</ion-label>
+    <ion-input [(ngModel)]="wordValue" placeholder="Quantes paraules vols que apareixin?"></ion-input>
+  </ion-item>
+  <!-- <ion-list>
     <ion-item *ngFor="let item of items">
       <ion-icon [name]="item.icon" slot="start"></ion-icon>
       {{item.title}}
@@ -18,10 +30,13 @@
         {{item.note}}
       </div>
     </ion-item>
-  </ion-list>
+  </ion-list> -->
   <!--
     <div *ngIf="selectedItem" padding>
       You navigated here from <b>{{selectedItem.title }}</b>
     </div>
   -->
+  <div style="display: block; margin: 40px auto; text-align: center;">
+    <ion-button color="primary" (click)="submitStuff()">SUBMIT</ion-button>
+  </div>
 </ion-content>
